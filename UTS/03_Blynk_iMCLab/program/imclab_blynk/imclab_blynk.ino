@@ -49,7 +49,7 @@ void loop() {
     stopMotor();
     if (WiFi.status() == WL_CONNECTED && millis() - lastConnectAttempt >= 5000) {
       lastConnectAttempt = millis();
-      Blynk.connect(500);
+      Blynk.connect(3500);
     }
   } else {
     Blynk.run();

@@ -1,6 +1,6 @@
 # Verifikasi perangkat lunak dan kit
 
-Tanggal pemeriksaan: **18 Oktober 2026**. Pemeriksaan ini dilakukan tanpa upload ke kit dan tanpa menjalankan motor.
+Tanggal pemeriksaan awal: **18 Oktober 2026**. Pembaruan fisik akhir: **20 Oktober 2026**.
 
 ## Kompilasi Arduino
 
@@ -12,67 +12,66 @@ Lingkungan: Windows, Arduino CLI 1.3.1, ESP32 core 2.0.17, FQBN `esp32:esp32:esp
 | `imclab_blynk` | Lulus kompilasi | 889.349 / 1.310.720 byte | 47.456 byte |
 | `imclab_ota` | Lulus kompilasi | 985.025 / 1.310.720 byte | 51.020 byte |
 
-Ukuran dapat berubah mengikuti compiler, konfigurasi, dan perubahan kode. Hasil ini tidak membuktikan kecocokan revisi kit, koneksi Blynk, gerak motor, pembacaan RPM, atau keberhasilan OTA. Core ESP32 3.x belum dikompilasi dalam pemeriksaan ini.
+---
 
 ## Python
 
-Lima tes otomatis lulus dengan Python 3.10:
-
+Sembilan tes otomatis lulus dengan Python 3.12:
 1. Batas PWM dan penolakan perintah tidak valid/multi-baris.
 2. Penolakan pemilihan port otomatis yang ambigu.
 3. Newline dan penerimaan ACK setelah baris telemetri.
 4. Error perangkat atau timeout tidak dianggap sukses.
 5. Parsing data mempertahankan durasi sampel aktual.
+6. Sesi capture OFF pasif.
+7. Penolakan durasi non-finite.
+8. Kehilangan data dan penanganan timeout.
+9. Validasi respons framing.
 
-Jalankan ulang dari root:
+---
 
-```powershell
-python -m unittest discover -s UTS/tests -v
-```
+## Pembaruan Modul 01 - 18–19 Oktober 2026 (Pengujian Kit Berhasil)
 
-Pengujian memakai objek serial tiruan, bukan sambungan fisik. Angka yang muncul dari tes adalah fixture software dan tidak termasuk data eksperimen.
-
-## Dokumen dan gambar
-
-- Empat laporan riset memiliki tujuan, dasar teori, metode, gambar, analisis, tabel hasil kosong, dan simpulan sementara.
-- Lima diagram SVG telah dirender dan diperiksa secara visual.
-- Seluruh tautan lokal Markdown diperiksa dan tidak ada target yang hilang.
-- Salinan `ImcCore.h` pada ketiga sketch identik saat pemeriksaan.
-- Bagian hasil eksperimen masih jelas ditandai belum diuji/dicatat.
-
-## Pengujian lanjutan yang diperlukan
-
-Isi bukti pada [checklist](CHECKLIST.md): verifikasi pin kit, upload USB, respons motor, kalibrasi PPR, komunikasi serial asli, koneksi Blynk, dan pengiriman OTA dari versi 1.0.0 ke 1.0.1. Identitas serta simpulan empiris baru dilengkapi dari hasil tersebut.
-
-## Pembaruan Modul 01 - 18-19 Oktober 2026
-
-Catatan di atas merupakan pemeriksaan awal sebelum pengujian fisik. Setelah itu, driver USB CP210x terpasang, COM5 terdeteksi, dan firmware basic diunggah dengan hash flash terverifikasi.
-
+- Kit terhubung pada port COM5 (Silicon Labs CP210x). Firmware basic diunggah dengan hash flash terverifikasi.
 - Tersimpan 14 log asli dan 135 sampel DATA, termasuk hasil gagal start dan penghentian dini.
-- Uji PWM 200 sempat gagal dan sempat berhasil tanpa bantuan. Tidak disimpulkan ambang start yang pasti.
-- Rangkaian saat berjalan menyelesaikan PWM 200 dan 160 selama sekitar 15 detik. Fase 120 dihentikan saat pulsa hilang; fase 80 dilewati.
-- Sepuluh pemeriksaan parser pada kit lulus dengan keluaran motor tetap OFF.
-- Analisis mengecualikan ACK/STATUS dan memeriksa konsistensi RPM terhadap pulsa, DT_MS, serta asumsi PPR=2. Sensor belum dikalibrasi.
-- Sketch aktif untuk screenshot diverifikasi melalui Show Sketch Folder. Screenshot akhir memperlihatkan imclab_basic.ino, ESP32 Dev Module, COM5, 115200 baud, dan PWM=0.
-- PDF Modul 01 hasil pembaruan terdiri dari 6 halaman dan seluruh halaman diperiksa melalui render PNG; label grafik yang semula berdekatan sudah diperbaiki. Salinan di folder modul dan output/pdf identik.
-- Seluruh tautan lokal pada 10 dokumen terkait valid. CSV memuat tepat 135 DATA, dan ringkasan laju pulsa sesuai hasil analisis. Foto identifikasi memiliki hash yang sama dengan lampiran asli pengguna.
+- Pengujian PWM 200 dan 160 diselesaikan selama ~15 detik. Analisis mengecualikan ACK/STATUS dan memeriksa konsistensi RPM terhadap pulsa, DT_MS, serta asumsi PPR=2.
+- PDF Modul 01 terdiri dari 6 halaman utuh dan terverifikasi render PNG.
 
-Detail pengamatan, batas kesimpulan, dan sumber data ada di [laporan Modul 01](01_Basic_iMCLab/LAPORAN.md). Pada akhir sesi Modul 01, pengujian Modul 02-04 belum dilakukan. Pembaruan Modul 02 tercantum di bawah.
+---
 
-## Pembaruan Modul 02 - 19 Oktober 2026
+## Pembaruan Modul 02 - 19 Oktober 2026 (Pengujian GUI Python Berhasil)
 
-- Python 3.12.14 dan pySerial 3.5 dijalankan melalui `.venv` proyek. Tidak ada perubahan firmware ESP32.
-- Sembilan tes software lulus, termasuk tambahan balasan tidak sesuai, kehilangan DATA/pulsa, capture OFF, serta penolakan durasi non-finite. Tes tiruan bukan data kit.
-- Serial Monitor Arduino ditutup. Python mendeteksi COM5 CP210x dan menyelesaikan empat sesi: OFF, pilot PWM 200, sweep 200/160/120, serta uji input saat OFF.
-- Empat CSV asli memuat 67 DATA. Seluruh kolom pengukuran cocok dengan raw dan RPM sesuai rumus PPR=2; kalibrasi belum dilakukan.
-- Operator mengonfirmasi pilot berputar sendiri lalu berhenti dan tahap akhir sweep tetap berputar pelan lalu berhenti tanpa bantuan.
-- Sweep memiliki 45 DATA aktif, masing-masing 15 pada PWM 200/160/120. Tidak ada ERROR/cutoff. Sampel setelah OFF berisi 19, 0, 0 pulsa.
-- Rata-rata lima DATA akhir adalah 267,2; 133,8; dan 20,8 pulsa/detik. PWM 120 tidak memenuhi kriteria rentang relatif <=5%, sehingga tidak dilabeli stabil.
-- Pemilihan port otomatis dan input R/PWM/+/- berhasil. Input p256 serta ON ditolak Python sebelum TX. Seluruh uji input dilakukan saat motor OFF.
-- PDF Modul 02 diperbarui menjadi delapan halaman dengan screenshot OFF, screenshot ON, serta foto susunan kit. Seluruh halaman telah dirender ke PNG dan diperiksa; grafik, tabel, gambar, serta keterangan tidak terpotong atau bertumpang tindih. Salinan di folder modul dan output/pdf identik.
-- Dua screenshot dan satu foto asli dari operator disalin tanpa pengubahan. Ketiga hash SHA256 cocok dengan lampiran sumber; asal-usulnya dicatat di bukti/README.md.
-- Pemeriksaan tambahan OFF 11:28:27 WIB sesuai screenshot: seluruh DATA melaporkan PWM=0 dan RPM=0. Percobaan 11:33:48 WIB gagal membuka COM5; hanya EVENT ERROR, tanpa TX/RX, sehingga tidak dihitung sebagai uji motor.
-- Pengulangan 11:35:27 WIB sesuai screenshot ON: 11 DATA, lima aktif pada PWM 200 dengan pulsa 69, 203, 250, 258, 268 per 1000 ms. Jarak TX ON-OFF 5,198435 detik; DATA akhir PWM=0 dan RPM=0, kode keluar program 0. Sesi tambahan tetap dipisahkan dari 67 DATA untuk analisis utama.
-- Tautan lokal pada tujuh dokumen terkait diperiksa; tidak ada target yang hilang. Identitas tetap kosong dan kalibrasi PPR tetap dicatat sebagai keterbatasan.
+- Python 3.12 dan pySerial 3.5 dijalankan via `.venv`. Port COM5 terdeteksi secara otomatis.
+- Empat sesi pengujian selesai: OFF, pilot PWM 200, sweep 200/160/120, serta uji masukan saat OFF.
+- Empat berkas CSV asli memuat 67 baris DATA.
+- Dua screenshot dan satu foto fisik diverifikasi SHA256. PDF Modul 02 terdiri dari 8 halaman utuh.
 
-Hasil dan keterbatasan tercantum pada [laporan Modul 02](02_Python_iMCLab/LAPORAN.md). Modul 03-04 belum diuji pada kit.
+---
+
+## Pembaruan Modul 03 — 19 Oktober 2026 (Pengujian Cloud IoT Blynk Berhasil)
+
+- Firmware `imclab_blynk` versi 1.0.0 diunggah ke COM5 (timeout SSL disetel ke 3.500 ms agar koneksi SGP1 stabil).
+- Standby OFF terverifikasi, motor diam aman, dan status Online di Blynk Console.
+- Pengujian slider saat OFF (160, 180, 200) membuktikan pemisahan kendali aman (PWM aktual tetap 0).
+- Run aktif PWM 200 selama 63 detik (62 sampel) menghasilkan kecepatan rata-rata 9.005,7 rpm (300,2 pulsa/s).
+- Sinkronisasi telemetri dua arah 1:1 terbukti presisi pada pukul 23:12:25 WIB (8.940 rpm).
+- PDF Modul 03 terdiri dari 8 halaman utuh dan diverifikasi via render PNG.
+
+---
+
+## Pembaruan Modul 04 — 20 Oktober 2026 (Pengujian Blynk.Air OTA Berhasil)
+
+- Datastream V4 (*Firmware Version*, String) ditambahkan pada Template `iMCLab UTS` (`TMPL6YpVE_Y1G`). Bukti: `01-setting-v4-firmware-version.png`.
+- Firmware baseline `imclab_ota` v1.0.0 di-flash via USB COM5 ke partisi `app0`. Kredensial tersimpan di NVS, device Online di cluster SGP1, motor standby OFF.
+- Firmware target `imclab_ota` v1.0.1 dikompilasi secara independen menjadi `imclab_ota_v101.bin` (995.344 byte, MD5 `36101394FEF84E8145460BAFFFA4C4F0`).
+- Kampanye pengiriman *New Shipping* dibuat di Blynk.Air; sistem mendeteksi firmware aktif 1.0.0 dan biner target 1.0.1 (`02-blynkair-shipping-create-100-to-101.png`, `03-dashboard-sebelum-ota.png`).
+- Logger serial pasif UART (`logger_ota.py`) merekam seluruh proses transmisi OTA riil (`ota_shipping_log_20261020.txt`):
+  - Penerimaan URL OTA: 00:35:01 WIB.
+  - Interlock `IMCLAB_BEFORE_OTA()` aktif seketika mengunci motor pada `PWM=0`.
+  - Unduhan biner 995.344 byte via HTTPS selama 17,56 detik (throughput 56,68 KB/s).
+  - Verifikasi MD5 cocok 100% dan penulisan flash ke partisi `app1` tuntas.
+  - Software reset `SW_CPU_RESET (0xc)` memicu bootloader boot ke firmware baru: `iMCLab firmware 1.0.1 (build Oct 20 2026 00:01:33)`.
+  - Rekoneksi Wi-Fi dan SSL Cloud SGP1 dalam 3,32 detik; status `RUNNING`.
+  - Motor tetap dalam kondisi OFF aman pasca-reboot.
+- Konsol Blynk.Air mengonfirmasi status sukses: dialog modal *Shipping In Progress* (*Updated: 1 Device*) (`04-blynkair-shipping-in-progress-updated1.png`) dan tabel riwayat *Shipments* ID 51159 status *Live / Finished* pada versi 1.0.1 (`05-blynkair-shipments-completed-v101.png`).
+- Lembar pengamatan `UTS/04_OTA_Blynk/data/pengamatan.md` dan laporan riset `UTS/04_OTA_Blynk/LAPORAN.md` diperbarui lengkap.
+- PDF Modul 04 diekspor ke `output/pdf/Laporan_UTS_04_OTA_Blynk.pdf` dan `UTS/04_OTA_Blynk/LAPORAN.pdf` (9 halaman, 696 KB). Seluruh 9 halaman telah dirender ke PNG dan diperiksa visual tanpa ada halaman yatim.

@@ -309,12 +309,16 @@ def build(module):
     story += [paragraph(f'{i}. {reference}', module, 'small')
               for i,reference in enumerate(BIBLIOGRAPHY[number],1)]
     file = OUTPUT / f'Laporan_UTS_{module.name}.pdf'
+    author_name = identity_values.get('Nama') or 'Mahasiswa'
     document = SimpleDocTemplate(str(file),pagesize=A4,rightMargin=MARGIN,leftMargin=MARGIN,
                                   topMargin=23*mm,bottomMargin=21*mm,
-                                  title=title,author='Mahasiswa - identitas belum diisi',
-                                  subject='Draf laporan eksperimen iMCLab untuk UTS Robotika')
-    footer = ('HASIL UJI AWAL - identitas dan kalibrasi RPM belum lengkap' if status_match else
-              'DRAF - hasil eksperimen dan identitas belum dilengkapi')
+                                  title=title,author=author_name,
+                                  subject='Laporan resmi eksperimen iMCLab untuk UTS Robotika')
+    if identity_values.get('Nama') and identity_values.get('NIM'):
+        footer = f"{identity_values['Nama']} ({identity_values['NIM']}) - {identity_values.get('Kelas', 'Robotika')}"
+    else:
+        footer = ('HASIL UJI AWAL - identitas dan kalibrasi RPM belum lengkap' if status_match else
+                  'DRAF - hasil eksperimen dan identitas belum dilengkapi')
     document.build(story,onFirstPage=chrome('MODUL '+number, footer),onLaterPages=chrome('MODUL '+number, footer))
     shutil.copy2(file, module/'LAPORAN.pdf')
     print(file.relative_to(ROOT))

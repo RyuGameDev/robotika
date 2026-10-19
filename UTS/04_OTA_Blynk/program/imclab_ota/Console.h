@@ -47,8 +47,21 @@ void console_init()
       return;
     }
     String auth = argv[0];
-    String ssid = argv[1];
-    String pass = (argc >= 3) ? argv[2] : "";
+    String ssid = "";
+    String pass = "";
+
+    if (argc == 2) {
+      ssid = argv[1];
+    } else if (argc == 3) {
+      ssid = argv[1];
+      pass = argv[2];
+    } else if (argc > 3) {
+      pass = argv[argc - 1];
+      for (int i = 1; i < argc - 1; i++) {
+        if (i > 1) ssid += " ";
+        ssid += argv[i];
+      }
+    }
 
     if (auth.length() != 32) {
       edgentConsole.print(R"json({"status":"error","msg":"invalid token size"})json" "\n");
@@ -61,6 +74,8 @@ void console_init()
     CopyString(ssid, configStore.wifiSSID);
     CopyString(pass, configStore.wifiPass);
     CopyString(auth, configStore.cloudToken);
+    configStore.setFlag(CONFIG_FLAG_VALID, true);
+    config_save();
 
     BlynkState::set(MODE_SWITCH_TO_STA);
   });

@@ -2,7 +2,7 @@
 
 Identitas: [identitas mahasiswa](../IDENTITAS.md). Tanggal eksperimen: **19 Oktober 2026**.
 
-Status laporan: **Koneksi Python, ON/OFF, variasi PWM, dan CSV sudah diuji pada kit. Identitas tetap kosong; RPM memakai asumsi PPR=2 yang belum dikalibrasi.**
+Status laporan: **Koneksi Python, ON/OFF, variasi PWM, dan CSV sudah diuji pada kit. Identitas mahasiswa lengkap; RPM memakai asumsi PPR=2 yang belum dikalibrasi.**
 
 ## Ringkasan riset
 

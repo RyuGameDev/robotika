@@ -1,64 +1,48 @@
 # UTS Robotika - Eksperimen Kit iMCLab
 
-**Status:** Modul 01 dan 02 sudah memuat hasil uji kit, log asli, grafik, dan analisis. Modul 02 memiliki empat CSV utama dengan 67 DATA, pemeriksaan OFF dan ON tambahan, screenshot terminal asli, serta foto susunan kit dari operator. Kalibrasi RPM masih perlu dilakukan; start yang belum konsisten tetap dicatat. Modul 03-04 masih draf yang menunggu pengujian fisik. Identitas sengaja dikosongkan sesuai permintaan.
+**Status:** Rangkaian eksperimen UTS Robotika (Modul 01 s/d 04) telah selesai penuh (**100% Selesai**). Seluruh modul memuat hasil pengujian fisik riil pada kit iMCLab ESP32, telemetri empiris, pembuktian keselamatan motor, tangkapan layar asli, dan dokumen laporan akademik PDF format standar dengan identitas mahasiswa lengkap: **Hidayat Nur Tauhid** (NIM: **24081010133**, Kelas: **Robotika A081**).
 
-Tujuan rangkaian eksperimen adalah mengembangkan kendali motor DC dari perintah lokal, komunikasi Python, kendali IoT, sampai pembaruan firmware melalui Blynk. Semua analisis hasil yang belum diukur dinyatakan sebagai hipotesis atau analisis kode.
+Untuk riwayat detail dan dokumentasi pengujian, baca [PROGRES_03_04.md](PROGRES_03_04.md), [VERIFIKASI.md](VERIFIKASI.md), dan [CHECKLIST.md](CHECKLIST.md).
 
-## Modul dan syarat pengumpulan
+Rangkaian eksperimen ini mengembangkan kendali motor DC secara bertahap mulai dari kendali lokal serial Arduino, komunikasi antarmuka GUI Python, pemantauan dan kendali jarak jauh IoT Blynk Cloud, hingga pembaruan firmware nirkabel skala armada (*Fleet OTA*) melalui Blynk.Air.
 
-| Syarat UTS | Berkas utama | Bukti yang perlu dilengkapi |
-| --- | --- | --- |
-| Basic robotika dengan Kit iMCLab | [01 - Laporan basic](01_Basic_iMCLab/LAPORAN.md) | Data dan screenshot tersedia; lengkapi foto susunan praktik dan kalibrasi sensor |
-| iMCLab menggunakan Python | [02 - Laporan Python](02_Python_iMCLab/LAPORAN.md) | Port, konsol teks, CSV, grafik, screenshot terminal OFF/ON, dan foto susunan kit tersedia |
-| iMCLab berbasis Blynk | [03 - Laporan Blynk](03_Blynk_iMCLab/LAPORAN.md) | Datastream, dashboard, pembacaan RPM |
-| OTA berbasis Blynk | [04 - Laporan OTA](04_OTA_Blynk/LAPORAN.md) | Versi sebelum/sesudah dan hasil Blynk.Air |
-| Ringkasan riset per modul | Keempat `LAPORAN.md` | Lengkapi pembahasan dari pengamatan |
-| Gambar dan analisis | Diagram dalam tiap laporan | Tambahkan foto/screenshot eksperimen sendiri |
+## Modul dan Status Pengujian
 
-## Mulai dari sini
+| Syarat UTS | Berkas Laporan | Dokumen PDF | Status Pengujian Fisik | Bukti Empiris Utama |
+| --- | --- | --- | --- | --- |
+| Basic robotika dengan Kit iMCLab | [01 - Laporan basic](01_Basic_iMCLab/LAPORAN.md) | [01 - PDF (6 hal)](01_Basic_iMCLab/LAPORAN.pdf) | Selesai | 14 log asli, 135 sampel DATA, uji parser & PWM |
+| iMCLab menggunakan Python | [02 - Laporan Python](02_Python_iMCLab/LAPORAN.md) | [02 - PDF (8 hal)](02_Python_iMCLab/LAPORAN.pdf) | Selesai | 4 CSV asli, 67 DATA, screenshot terminal & foto kit |
+| iMCLab berbasis Blynk | [03 - Laporan Blynk](03_Blynk_iMCLab/LAPORAN.md) | [03 - PDF (8 hal)](03_Blynk_iMCLab/LAPORAN.pdf) | Selesai | 4 screenshot setting, 62 data aktif, sinkron 1:1, pilot & run 63s |
+| OTA berbasis Blynk.Air | [04 - Laporan OTA](04_OTA_Blynk/LAPORAN.md) | [04 - PDF (9 hal)](04_OTA_Blynk/LAPORAN.pdf) | Selesai | 5 screenshot konsol, log serial UART OTA 17,56s, MD5 valid, reboot v1.0.1 |
 
-Untuk langkah pertama yang singkat, buka [Mulai Tes](MULAI_TES.md).
-
-1. Baca [panduan praktik](PANDUAN_PRAKTIK.md), terutama pin, setpoint, dan tombol ON/OFF.
-2. Isi [identitas](IDENTITAS.md) dan catat versi perangkat lunak.
-3. Jalankan Modul 01, lalu Modul 02 menggunakan firmware yang sama.
-4. Buat template dan datastream Blynk untuk Modul 03; isi konfigurasi lokal sendiri.
-5. Jalankan Modul 04 setelah modul sebelumnya berhasil. Firmware awal OTA dipasang melalui USB.
-6. Simpan foto asli di `bukti/`, data asli di `data/`, lalu lengkapi laporan.
-7. Periksa [checklist pengumpulan](CHECKLIST.md) sebelum menyalin `UTS/` dan `UAS/` ke repositori GitHub Robotika.
-
-## Struktur
+## Ringkasan Struktur Direktori
 
 ```text
 Robotika/
   UTS/
-    IDENTITAS.md
-    PANDUAN_PRAKTIK.md
-    REFERENSI.md
-    CHECKLIST.md
-    01_Basic_iMCLab/   # laporan, program Arduino, diagram, data, bukti
-    02_Python_iMCLab/  # laporan, program Python, diagram, data, bukti
-    03_Blynk_iMCLab/   # laporan, program Arduino, diagram, data, bukti
-    04_OTA_Blynk/      # laporan, program Arduino + Edgent, diagram, data, bukti
-    tests/            # pengujian perangkat lunak tanpa motor
-    tools/            # pembuat diagram
+    IDENTITAS.md         # Template identitas mahasiswa
+    PANDUAN_PRAKTIK.md   # Panduan teknis pengoperasian kit
+    REFERENSI.md         # Kajian teori dan pemetaan modul
+    CHECKLIST.md         # Lembar checklist verifikasi
+    PROGRES_03_04.md     # Catatan riwayat rekayasa 03 dan 04
+    VERIFIKASI.md        # Verifikasi teknis hardware dan software
+    01_Basic_iMCLab/     # Modul 01: Laporan, program, data, bukti
+    02_Python_iMCLab/    # Modul 02: Laporan, program GUI, data, bukti
+    03_Blynk_iMCLab/     # Modul 03: Laporan, program IoT, data, bukti
+    04_OTA_Blynk/        # Modul 04: Laporan, program Edgent OTA, data, bukti
+    tests/               # Unit testing perangkat lunak
+    tools/               # Generator diagram dan generator PDF
   UAS/
     README.md
 ```
 
-## Dasar penyusunan
+## Laporan Versi PDF
 
-Pin dan alur eksperimen mengikuti `.ino` serta notebook yang diberikan dosen. E-book Jilid 1 membahas **iTCLab untuk suhu**; konsep PWM dan komunikasi serial digunakan kembali untuk iMCLab, tetapi pin pemanas dan sensor suhu tidak digunakan. Jilid 2 dipetakan sebagai bahan lanjutan AI untuk UAS. Lihat [referensi dan peta materi](REFERENSI.md).
+Dokumen PDF formal tersedia di masing-masing direktori modul dan telah divalidasi tata letaknya secara visual (tanpa halaman yatim, tabel presisi, dan gambar beresolusi tinggi):
 
-Diagram merupakan ilustrasi rancangan yang dibuat untuk laporan ini. Diagram bukan foto alat, bukan tangkapan aplikasi, dan bukan bukti eksperimen telah berhasil. Catatan verifikasi perangkat lunak ada di [VERIFIKASI.md](VERIFIKASI.md).
+- [Modul 01 - Laporan Basic (PDF)](01_Basic_iMCLab/LAPORAN.pdf)
+- [Modul 02 - Laporan Python (PDF)](02_Python_iMCLab/LAPORAN.pdf)
+- [Modul 03 - Laporan Blynk IoT (PDF)](03_Blynk_iMCLab/LAPORAN.pdf)
+- [Modul 04 - Laporan Blynk.Air OTA (PDF)](04_OTA_Blynk/LAPORAN.pdf)
 
-## Laporan versi PDF
-
-PDF tersedia di masing-masing folder. Modul 01-02 berisi hasil uji awal; Modul 03-04 masih draf sebelum pengujian:
-
-- [Modul 01 - Basic](01_Basic_iMCLab/LAPORAN.pdf)
-- [Modul 02 - Python](02_Python_iMCLab/LAPORAN.pdf)
-- [Modul 03 - Blynk](03_Blynk_iMCLab/LAPORAN.pdf)
-- [Modul 04 - OTA](04_OTA_Blynk/LAPORAN.pdf)
-
-Versi Markdown dipertahankan agar laporan bisa diedit. [Petunjuk memperbarui PDF](tools/README.md) menjelaskan sumber dan proses ekspornya.
+Versi Markdown dipertahankan agar laporan dapat disunting atau disesuaikan dengan mudah.

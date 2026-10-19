@@ -1,7 +1,8 @@
 #include "template_config.h"
-#define BLYNK_FIRMWARE_VERSION "1.0.0"  // Ubah menjadi 1.0.1 untuk percobaan OTA.
+#define BLYNK_FIRMWARE_VERSION "1.0.1"  // Target pembaruan OTA via Blynk.Air
 #define BLYNK_PRINT Serial
 #define USE_ESP32_DEV_MODULE           // Edgent tidak mengambil alih LED GPIO2.
+#define APP_DEBUG
 
 #include "ImcCore.h"
 bool otaInProgress = false;

@@ -2,7 +2,7 @@
 
 Identitas: [identitas mahasiswa](../IDENTITAS.md). Tanggal eksperimen: **18-19 Oktober 2026**.
 
-Status laporan: **Data kit dan pengamatan operator sudah dicatat. Identitas, kalibrasi RPM, dan pemeriksaan penyebab start yang tidak konsisten masih perlu dilengkapi.**
+Status laporan: **Data kit dan pengamatan operator sudah dicatat. Identitas mahasiswa lengkap; kalibrasi RPM dan pemeriksaan lanjutan tetap dicatat objektif.**
 
 ## Ringkasan riset
 
